@@ -1,7 +1,7 @@
 import easyocr
 import cv2
 from rapidfuzz import process, fuzz
-from pokedex import pokedex1  # liste des noms de Pokémon (str)
+from pokedex import pokedexUS  # liste des noms de Pokémon (str)
 import numpy as np
 
 def calculate_text_size(bbox):
@@ -78,7 +78,7 @@ def detect_pokemon_name(image_path, lang='en', similarity_threshold=72, size_tol
             print(f"- Texte : {data['text']} → nettoyé : {data['cleaned_text']}")
             print(f"  Confiance OCR : {data['confidence']*100:.2f}% | Taille : {data['area']:.0f} (W:{data['width']:.0f}, H:{data['height']:.0f})")
         
-        match, score, *_ = process.extractOne(data['cleaned_text'], pokedex1, scorer=fuzz.ratio)
+        match, score, *_ = process.extractOne(data['cleaned_text'], pokedexUS, scorer=fuzz.ratio)
         
         if verbose:
             print(f"  ➤ Comparé à pokédex : {match} (similitude : {score}%)")
@@ -119,7 +119,7 @@ def detect_pokemon_name(image_path, lang='en', similarity_threshold=72, size_tol
             print(f"- Texte (taille compatible) : {data['text']} → {data['cleaned_text']}")
             print(f"  Confiance OCR : {data['confidence']*100:.2f}% | Taille : {data['area']:.0f}")
         
-        match, score, *_ = process.extractOne(data['cleaned_text'], pokedex1, scorer=fuzz.ratio)
+        match, score, *_ = process.extractOne(data['cleaned_text'], pokedexUS, scorer=fuzz.ratio)
         
         if verbose:
             print(f"  ➤ Comparé à pokédex : {match} (similitude : {score}%)")
