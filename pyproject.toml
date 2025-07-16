@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "pokemon-scanner"
 version = "0.1.0"
 description = "Pokemon Card Scanner"
-authors = ["Your Name <your@email.com>"]
+authors = ["LeandreRaeth <leandreraeth19@gmail.com@email.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
