@@ -9,8 +9,17 @@ import io
 # Import de votre script existant (gardé intact)
 from pokemon_detector import detect_pokemon_name_best_match, detect_pokemon_name
 
+
+
+# Ou plus permissif (à éviter en production) :
+# CORS(app, origins=["*"])
 app = Flask(__name__)
-CORS(app)  # Pour permettre les requêtes depuis GitHub Pages
+# Configuration CORS pour GitHub Pages
+CORS(app, origins=[
+    "https://pokebinderdex.github.io",
+    "http://localhost:3000",  # Pour les tests locaux
+    "http://127.0.0.1:3000"
+]) 
 
 @app.route('/api/detect-pokemon', methods=['POST'])
 def detect_pokemon():
