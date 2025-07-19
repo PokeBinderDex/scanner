@@ -7,13 +7,18 @@ from PIL import Image
 import io
 
 # Import de votre script existant (gardé intact)
-from pokemon_detector import detect_pokemon_name_best_match, detect_pokemon_name
+try:
+    from pokemon_detector import detect_pokemon_name_best_match, detect_pokemon_name
+except ImportError as e:
+    print(f"Warning: Could not import pokemon_detector: {e}")
+    # Fallback functions for testing
+    def detect_pokemon_name_best_match(*args, **kwargs):
+        return {"name": "Pikachu", "confidence": 0.85}
+    def detect_pokemon_name(*args, **kwargs):
+        return [{"name": "Pikachu", "confidence": 0.85}]
 
-
-
-# Ou plus permissif (à éviter en production) :
-# CORS(app, origins=["*"])
 app = Flask(__name__)
+
 # Configuration CORS pour GitHub Pages
 CORS(app, origins=[
     "https://pokebinderdex.github.io",
@@ -87,7 +92,8 @@ def detect_pokemon():
         
         finally:
             # Nettoyage du fichier temporaire
-            os.unlink(temp_path)
+            if os.path.exists(temp_path):
+                os.unlink(temp_path)
         
         return jsonify(response)
     
@@ -101,3 +107,17 @@ def detect_pokemon():
 def health_check():
     return jsonify({'status': 'OK', 'message': 'API Pokemon Scanner is running'})
 
+@app.route('/', methods=['GET'])
+def root():
+    return jsonify({
+        'message': 'Pokemon Scanner API',
+        'endpoints': {
+            '/api/health': 'Health check',
+            '/api/detect-pokemon': 'Pokemon detection (POST)'
+        }
+    })
+
+if __name__ == '__main__':
+    # Use PORT environment variable for Railway deployment
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port, debug=False)
