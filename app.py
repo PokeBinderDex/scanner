@@ -101,5 +101,3 @@ def detect_pokemon():
 def health_check():
     return jsonify({'status': 'OK', 'message': 'API Pokemon Scanner is running'})
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
