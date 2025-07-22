@@ -4,12 +4,9 @@ from rapidfuzz import process, fuzz
 from pokedex import pokedexUS  # liste des noms de Pokémon (str)
 import numpy as np
 
-readers = {}  # cache de readers
 
-def get_reader(lang='en'):
-    if lang not in readers:
-        readers[lang] = easyocr.Reader([lang], gpu=False)
-    return readers[lang]
+
+
 
 def calculate_text_size(bbox):
     """Calcule la taille approximative du texte basée sur la bounding box"""
@@ -47,7 +44,7 @@ def detect_pokemon_name(image_path, lang='en', similarity_threshold=72, size_tol
     h, w, _ = image.shape
     final_result = None
     
-    reader = get_reader(lang)
+    reader =  easyocr.Reader([lang], gpu=False)
     results = reader.readtext(image)
     
     # Première passe : analyser tous les textes et leurs tailles
