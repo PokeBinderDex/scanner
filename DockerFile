@@ -1,0 +1,32 @@
+# Image de base avec CUDA et Python
+FROM runpod/pytorch:2.1.0-py3.10-cuda11.8.0-devel-ubuntu22.04
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Installation des dépendances système
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copier les fichiers requirements et installer les dépendances Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copier tout le code source
+COPY . .
+
+# Pré-télécharger les modèles EasyOCR (optionnel, pour des démarrages plus rapides)
+RUN python -c "import easyocr; reader = easyocr.Reader(['en', 'fr'], gpu=False)"
+
+# Exposer le port (même si RunPod Serverless n'en a pas besoin)
+EXPOSE 8080
+
+# Commande par défaut pour RunPod Serverless
+CMD ["python", "handler.py"]
