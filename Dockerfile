@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     git \
     && rm -rf /var/lib/apt/lists/*
-
 # Créer et se placer dans le dossier de l'app
 WORKDIR /app
 
