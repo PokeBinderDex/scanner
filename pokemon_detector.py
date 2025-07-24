@@ -44,7 +44,7 @@ def detect_pokemon_name(image_path, lang='en', similarity_threshold=72, size_tol
     h, w, _ = image.shape
     final_result = None
     
-    reader =  easyocr.Reader([lang], gpu=False)
+    reader =  easyocr.Reader([lang], gpu=True)
     results = reader.readtext(image)
     
     # Première passe : analyser tous les textes et leurs tailles
