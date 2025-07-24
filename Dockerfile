@@ -20,5 +20,6 @@ RUN pip install --no-cache-dir --ignore-installed blinker -r requirements.txt
 COPY . .
 
 # Démarre le handler RunPod
-CMD ["python", "handler.py"]
+CMD ["runpod", "--handler=handler"]
+
 
