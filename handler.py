@@ -1,6 +1,4 @@
 import runpod
-import os
-from pokemon_detector import detect_pokemon_name_best_match
 
 def handler(event):
     print("⚡ Handler triggered:", event)
