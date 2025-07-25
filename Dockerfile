@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 # Créer et se placer dans le dossier de l'app
 WORKDIR /app
-
 # Copier les fichiers requirements et installer les dépendances Python
 COPY requirements.txt .
 RUN python -m pip install --upgrade pip
